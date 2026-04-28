@@ -55,19 +55,63 @@ body {
     background: #3d566e;
     color: #bdc3c7;
     border: none;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 0.5rem 0.4rem 1rem;
     cursor: pointer;
     font-size: 0.85rem;
     border-radius: 4px 4px 0 0;
     white-space: nowrap;
     max-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.tab .tab-name {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.tab-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 0.9rem;
+    line-height: 1;
+    padding: 0 0.2rem;
+    cursor: pointer;
+    opacity: 0.5;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.tab-close:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.tab.active .tab-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.tab-rename-input {
+    width: 100px;
+    padding: 0;
+    border: 1px solid #3498db;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    background: #fff;
+    color: #1a1a1a;
 }
 
 .tab:hover {
     background: #4a6a8a;
     color: #ecf0f1;
+}
+
+.tab:focus {
+    outline: 2px solid #3498db;
+    outline-offset: -2px;
 }
 
 .tab.active {
@@ -350,4 +394,98 @@ button {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+}
+
+/* Empty state / welcome */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #666;
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin: 0 0 0.5rem 0;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    margin: 0 0 1.5rem 0;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state .btn-primary {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Responsive layout */
+@media (max-width: 1024px) {
+    #content {
+        max-width: 100%;
+        padding: 0.75rem;
+    }
+
+    .skill-row select {
+        width: 120px;
+    }
+
+    .aspect-row {
+        flex-wrap: wrap;
+    }
+
+    .aspect-row input.aspect-label {
+        width: 100%;
+    }
+
+    .consequence-label {
+        width: 100px;
+    }
+
+    #header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    #header-actions {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .skill-row {
+        flex-wrap: wrap;
+    }
+
+    .skill-row input[type="text"] {
+        flex: 1 1 100%;
+    }
+
+    .skill-row select {
+        width: auto;
+        flex: 1;
+    }
+
+    .consequence-row {
+        flex-wrap: wrap;
+    }
+
+    .consequence-label {
+        width: 100%;
+    }
+
+    #tab-bar {
+        flex-wrap: wrap;
+    }
+
+    .tab {
+        max-width: none;
+    }
+
+    .split-pane {
+        min-width: 300px;
+    }
 }

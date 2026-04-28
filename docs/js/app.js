@@ -6,8 +6,8 @@ var splitMode = false;
 var splitSelections = { left: null, right: null };
 
 async function initWasm() {
-    const go = new Go();
-    const result = await WebAssembly.instantiateStreaming(
+    var go = new Go();
+    var result = await WebAssembly.instantiateStreaming(
         fetch("main.wasm"),
         go.importObject
     );
@@ -48,8 +48,58 @@ async function initWasm() {
         });
     });
 
+    // Wire up tab rename callback — update character name when tab is renamed via double-click
+    TabManager.onRename = function (id, newName) {
+        if (characters[id]) {
+            characters[id].name = newName;
+            CharacterUI.saveCharacter(characters[id]);
+        }
+    };
+
+    // Wire up empty state callback
+    TabManager.onEmpty = function () {
+        showEmptyState();
+    };
+
     // Restore saved characters from localStorage
     restoreCharacters();
+
+    // If no characters were restored, show empty state
+    if (TabManager.getAllTabs().length === 0) {
+        showEmptyState();
+    }
+}
+
+function showEmptyState() {
+    var content = document.getElementById("content");
+    content.innerHTML = "";
+
+    var empty = document.createElement("div");
+    empty.className = "empty-state";
+
+    var heading = document.createElement("h2");
+    heading.textContent = "Welcome to Fate4.tools";
+
+    var desc = document.createElement("p");
+    desc.textContent = "Create and manage character sheets for Fate Core. Your characters are saved locally in your browser.";
+
+    var createBtn = document.createElement("button");
+    createBtn.className = "btn btn-primary";
+    createBtn.textContent = "Create Character";
+    createBtn.addEventListener("click", function () {
+        newCharacterTab();
+    });
+
+    empty.appendChild(heading);
+    empty.appendChild(desc);
+    empty.appendChild(createBtn);
+    content.appendChild(empty);
+
+    // Hide export/print buttons when no character is active
+    var exportBtn = document.getElementById("export-btn");
+    var printBtn = document.getElementById("print-btn");
+    if (exportBtn) exportBtn.style.display = "none";
+    if (printBtn) printBtn.style.display = "none";
 }
 
 function newCharacterTab() {
@@ -92,6 +142,8 @@ function toggleSplitView() {
         var id = TabManager.getActiveTabId();
         if (id && characters[id]) {
             CharacterUI.renderCharacterSheet(characters[id]);
+        } else {
+            showEmptyState();
         }
     }
 }

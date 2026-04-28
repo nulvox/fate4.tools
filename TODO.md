@@ -90,15 +90,15 @@ Do NOT skip ahead. Mark `[x]` only after all tests pass and linting is clean.
 
 ## Phase 11: Polish and Edge Cases
 
-- [ ] **11.1** Tab management: close button on tabs (with confirmation if character has data), rename tab by double-clicking, reorder tabs by drag or keyboard.
-- [ ] **11.2** Empty state: when no characters exist, show a welcome/getting-started message with a prominent "Create Character" button.
-- [ ] **11.3** Keyboard accessibility: all interactive elements reachable via Tab key, Enter/Space to activate, Escape to cancel. Skill rating dropdown navigable via arrow keys.
-- [ ] **11.4** Responsive layout: ensure the sheet is usable at 1024px+ width. Collapse skill columns on narrower viewports.
-- [ ] **11.5** Performance: test with 10+ characters loaded. Ensure tab switching is instant, no lag on edits.
+- [x] **11.1** Tab management: close button on tabs (with confirmation if character has data), rename tab by double-clicking, reorder tabs by drag or keyboard.
+- [x] **11.2** Empty state: when no characters exist, show a welcome/getting-started message with a prominent "Create Character" button.
+- [x] **11.3** Keyboard accessibility: all interactive elements reachable via Tab key, Enter/Space to activate, Escape to cancel. Skill rating dropdown navigable via arrow keys.
+- [x] **11.4** Responsive layout: ensure the sheet is usable at 1024px+ width. Collapse skill columns on narrower viewports.
+- [x] **11.5** Performance: test with 10+ characters loaded. Ensure tab switching is instant, no lag on edits.
 
 ## Phase 12: Build and Deploy
 
-- [ ] **12.1** Verify `make build` produces a complete `docs/` directory: `index.html`, `main.wasm`, `wasm_exec.js`, CSS files, JS files. Verify: `make serve` → app works in browser.
-- [ ] **12.2** Add a `.github/pages.yml` or configure repo settings for GitHub Pages from `docs/` on main branch. Verify deployment instructions in README.
-- [ ] **12.3** Final test pass: run all Go tests, lint all files, create a character from scratch, fill every field, export JSON, import it back, print preview, verify side-by-side. All green.
-- [ ] **12.4** Write a minimal `README.md`: what this is, how to build, how to use, link to live site.
+- [x] **12.1** Verify `make build` produces a complete `docs/` directory: `index.html`, `main.wasm`, `wasm_exec.js`, CSS files, JS files. Verify: `make serve` → app works in browser.
+- [x] **12.2** Add a `.github/pages.yml` or configure repo settings for GitHub Pages from `docs/` on main branch. Verify deployment instructions in README.
+- [x] **12.3** Final test pass: run all Go tests, lint all files, create a character from scratch, fill every field, export JSON, import it back, print preview, verify side-by-side. All green.
+- [x] **12.4** Write a minimal `README.md`: what this is, how to build, how to use, link to live site.
