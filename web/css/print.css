@@ -1,0 +1,126 @@
+@media print {
+    /* Hide UI controls */
+    #header,
+    #tab-bar,
+    #warnings,
+    #storage-warning,
+    #import-error,
+    .btn,
+    .btn-small,
+    .btn-danger,
+    .split-selector,
+    button {
+        display: none !important;
+    }
+
+    /* In split view, only print left pane */
+    #split-container.active {
+        display: block !important;
+    }
+
+    #split-right {
+        display: none !important;
+    }
+
+    #split-left {
+        width: 100% !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    /* Reset layout */
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 10pt;
+    }
+
+    #loading {
+        display: none !important;
+    }
+
+    #app {
+        display: block !important;
+    }
+
+    #content {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Sheet sections */
+    .sheet-section {
+        border: 1px solid #999;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .sheet-section h2 {
+        font-size: 11pt;
+        border-bottom: 1px solid #000;
+        margin-bottom: 0.4rem;
+    }
+
+    /* Inputs render as text */
+    input[type="text"],
+    textarea,
+    select {
+        border: none;
+        background: transparent;
+        padding: 0;
+        font-size: 10pt;
+        box-shadow: none;
+    }
+
+    textarea {
+        min-height: auto;
+        height: auto;
+    }
+
+    /* Aspect rows */
+    .aspect-row {
+        margin-bottom: 0.2rem;
+    }
+
+    .aspect-row input.aspect-label {
+        font-weight: bold;
+        font-size: 9pt;
+    }
+
+    /* Skill rows */
+    .skill-row {
+        margin-bottom: 0.15rem;
+    }
+
+    /* Stress boxes */
+    .stress-box {
+        width: 20px;
+        height: 20px;
+        border: 1.5px solid #000;
+        font-size: 8pt;
+    }
+
+    .stress-box.checked {
+        background: #000;
+        color: #fff;
+    }
+
+    /* Consequence rows */
+    .consequence-row {
+        margin-bottom: 0.15rem;
+    }
+
+    .consequence-label {
+        font-weight: bold;
+    }
+
+    /* Stunt rows */
+    .stunt-row {
+        border-bottom: 1px dotted #ccc;
+        margin-bottom: 0.3rem;
+        padding-bottom: 0.3rem;
+    }
+}
