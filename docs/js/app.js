@@ -48,6 +48,17 @@ async function initWasm() {
         });
     });
 
+    // Wire up share button
+    document.getElementById("share-btn").addEventListener("click", function () {
+        var id = TabManager.getActiveTabId();
+        if (id && characters[id]) {
+            Share.shareCharacter(characters[id]);
+        }
+    });
+
+    // Initialize theme toggle
+    Theme.init();
+
     // Wire up tab rename callback — update character name when tab is renamed via double-click
     TabManager.onRename = function (id, newName) {
         if (characters[id]) {
@@ -60,6 +71,21 @@ async function initWasm() {
     TabManager.onEmpty = function () {
         showEmptyState();
     };
+
+    // Check for shared character in URL hash
+    var sharedChar = Share.loadFromHash();
+    if (sharedChar) {
+        // Give it a new ID so it doesn't collide with existing characters
+        var imported = JSON.parse(importCharacter(JSON.stringify(sharedChar)));
+        if (!imported.error) {
+            var char = JSON.parse(imported.character);
+            characters[char.id] = char;
+            Storage.saveCharacter(char);
+            TabManager.createTab(char.id, char.name || "Unnamed");
+            // Clear hash so refreshing doesn't re-import
+            history.replaceState(null, "", window.location.pathname);
+        }
+    }
 
     // Restore saved characters from localStorage
     restoreCharacters();
@@ -95,11 +121,13 @@ function showEmptyState() {
     empty.appendChild(createBtn);
     content.appendChild(empty);
 
-    // Hide export/print buttons when no character is active
+    // Hide export/print/share buttons when no character is active
     var exportBtn = document.getElementById("export-btn");
     var printBtn = document.getElementById("print-btn");
+    var shareBtn = document.getElementById("share-btn");
     if (exportBtn) exportBtn.style.display = "none";
     if (printBtn) printBtn.style.display = "none";
+    if (shareBtn) shareBtn.style.display = "none";
 }
 
 function newCharacterTab() {
@@ -207,13 +235,16 @@ TabManager.onActivate = function (id) {
     var char = characters[id];
     var exportBtn = document.getElementById("export-btn");
     var printBtn = document.getElementById("print-btn");
+    var shareBtn = document.getElementById("share-btn");
     if (char && !splitMode) {
         CharacterUI.renderCharacterSheet(char);
         if (exportBtn) exportBtn.style.display = "";
         if (printBtn) printBtn.style.display = "";
+        if (shareBtn) shareBtn.style.display = "";
     } else if (!char) {
         if (exportBtn) exportBtn.style.display = "none";
         if (printBtn) printBtn.style.display = "none";
+        if (shareBtn) shareBtn.style.display = "none";
     }
 };
 
