@@ -92,27 +92,24 @@ body {
 }
 
 /* Site footer */
-#site-footer,
-#loading-footer {
+#site-footer {
+    width: 100%;
     text-align: center;
     padding: 1rem;
     font-size: 0.8rem;
     color: var(--text-muted);
     border-top: 1px solid var(--section-border);
-    margin-top: auto;
     display: flex;
     justify-content: center;
     gap: 1rem;
 }
 
-#site-footer a,
-#loading-footer a {
+#site-footer a {
     color: var(--text-muted);
     text-decoration: none;
 }
 
-#site-footer a:hover,
-#loading-footer a:hover {
+#site-footer a:hover {
     color: var(--text);
     text-decoration: underline;
 }
