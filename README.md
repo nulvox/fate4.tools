@@ -31,4 +31,4 @@ Open `docs/index.html` in a browser (or use `make serve`). Click the **+** butto
 
 ## License
 
-See repository for license details.
+This project is licensed under the [MIT License](LICENSE).

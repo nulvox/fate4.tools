@@ -1,14 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fate4.tools — Fate Core Character Sheet</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/print.css">
+    <script>
+    // Apply saved theme immediately to avoid flash of wrong theme
+    (function() {
+        try {
+            var saved = localStorage.getItem("fate4_theme");
+            if (saved) {
+                document.documentElement.setAttribute("data-theme", saved);
+            } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+                document.documentElement.setAttribute("data-theme", "light");
+            }
+        } catch (e) {}
+    })();
+    </script>
 </head>
 <body>
-    <div id="loading">Loading WASM…</div>
+    <div id="loading">
+        <h1>Fate 4 Core Tools</h1>
+        <p>Loading…</p>
+    </div>
     <div id="app" style="display: none;">
         <header id="header">
             <h1>Fate4.tools</h1>
@@ -30,7 +46,16 @@
             <div id="split-right" class="split-pane"></div>
         </div>
         <main id="content"></main>
+        <footer id="site-footer">
+            <a href="https://github.com/nulvox/fate4.tools" target="_blank" rel="noopener">GitHub</a>
+            <span>MIT License</span>
+        </footer>
     </div>
+
+    <footer id="loading-footer">
+        <a href="https://github.com/nulvox/fate4.tools" target="_blank" rel="noopener">GitHub</a>
+        <span>MIT License</span>
+    </footer>
 
     <script src="wasm_exec.js"></script>
     <script src="js/tabs.js"></script>
