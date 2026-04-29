@@ -23,15 +23,19 @@ var TabManager = (function () {
         }
     }
 
-    function closeTab(id) {
+    function closeTab(id, skipConfirm) {
         var idx = tabs.findIndex(function (t) { return t.id === id; });
         if (idx === -1) return;
 
         // Check if character has any data worth confirming
         var tab = tabs[idx];
         var hasData = tab.name && tab.name !== "Unnamed" && tab.name !== "";
-        if (hasData && !confirm("Close \"" + tab.name + "\"? The character data will remain in storage.")) {
+        if (!skipConfirm && hasData && !confirm("Close \"" + tab.name + "\"? The character data will remain in storage.")) {
             return;
+        }
+
+        if (TabManager.onClose) {
+            TabManager.onClose(id);
         }
 
         tabs.splice(idx, 1);
@@ -198,6 +202,7 @@ var TabManager = (function () {
         getAllTabs: getAllTabs,
         onActivate: null,
         onEmpty: null,
-        onRename: null
+        onRename: null,
+        onClose: null
     };
 })();
