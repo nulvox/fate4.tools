@@ -72,10 +72,12 @@ async function initWasm() {
         showEmptyState();
     };
 
-    // Check for shared character in URL hash
+    // Restore saved characters from localStorage
+    restoreCharacters();
+
+    // Check for shared character in URL hash (after restore to avoid duplicates)
     var sharedChar = Share.loadFromHash();
     if (sharedChar) {
-        // Give it a new ID so it doesn't collide with existing characters
         var imported = JSON.parse(importCharacter(JSON.stringify(sharedChar)));
         if (!imported.error) {
             var char = JSON.parse(imported.character);
@@ -87,10 +89,7 @@ async function initWasm() {
         }
     }
 
-    // Restore saved characters from localStorage
-    restoreCharacters();
-
-    // If no characters were restored, show empty state
+    // If no characters were loaded, show empty state
     if (TabManager.getAllTabs().length === 0) {
         showEmptyState();
     }

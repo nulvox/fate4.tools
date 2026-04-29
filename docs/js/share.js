@@ -2,6 +2,19 @@
 
 var Share = (function () {
 
+    function toUrlSafeBase64(str) {
+        return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    }
+
+    function fromUrlSafeBase64(str) {
+        // Restore standard base64 characters and padding
+        var s = str.replace(/-/g, "+").replace(/_/g, "/");
+        while (s.length % 4 !== 0) {
+            s += "=";
+        }
+        return s;
+    }
+
     function encodeCharacter(char) {
         var json = JSON.stringify(char);
         var bytes = new TextEncoder().encode(json);
@@ -9,12 +22,13 @@ var Share = (function () {
         for (var i = 0; i < bytes.length; i++) {
             binary += String.fromCharCode(bytes[i]);
         }
-        return btoa(binary);
+        return toUrlSafeBase64(btoa(binary));
     }
 
     function decodeCharacter(encoded) {
         try {
-            var binary = atob(encoded);
+            var standard = fromUrlSafeBase64(encoded);
+            var binary = atob(standard);
             var bytes = new Uint8Array(binary.length);
             for (var i = 0; i < binary.length; i++) {
                 bytes[i] = binary.charCodeAt(i);
