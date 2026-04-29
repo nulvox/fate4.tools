@@ -56,6 +56,19 @@ async function initWasm() {
         }
     });
 
+    // Wire up delete button
+    document.getElementById("delete-btn").addEventListener("click", function () {
+        var id = TabManager.getActiveTabId();
+        if (id && characters[id]) {
+            var name = characters[id].name || "Unnamed";
+            if (confirm("Permanently delete \"" + name + "\"? This cannot be undone.")) {
+                Storage.deleteCharacter(id);
+                delete characters[id];
+                TabManager.closeTab(id, true);
+            }
+        }
+    });
+
     // Initialize theme toggle
     Theme.init();
 
@@ -75,24 +88,25 @@ async function initWasm() {
     // Restore saved characters from localStorage
     restoreCharacters();
 
-    // Check for shared character in URL hash (after restore to avoid duplicates)
-    var sharedChar = Share.loadFromHash();
-    if (sharedChar) {
-        var imported = JSON.parse(importCharacter(JSON.stringify(sharedChar)));
-        if (!imported.error) {
-            var char = JSON.parse(imported.character);
-            characters[char.id] = char;
-            Storage.saveCharacter(char);
-            TabManager.createTab(char.id, char.name || "Unnamed");
+    // Check for shared character in URL hash
+    Share.loadFromHash().then(function (sharedChar) {
+        if (sharedChar) {
+            var imported = JSON.parse(importCharacter(JSON.stringify(sharedChar)));
+            if (!imported.error) {
+                var char = JSON.parse(imported.character);
+                characters[char.id] = char;
+                Storage.saveCharacter(char);
+                TabManager.createTab(char.id, char.name || "Unnamed");
+            }
             // Clear hash so refreshing doesn't re-import
             history.replaceState(null, "", window.location.pathname);
         }
-    }
 
-    // If no characters were loaded, show empty state
-    if (TabManager.getAllTabs().length === 0) {
-        showEmptyState();
-    }
+        // If no characters were loaded, show empty state
+        if (TabManager.getAllTabs().length === 0) {
+            showEmptyState();
+        }
+    });
 }
 
 function showEmptyState() {
@@ -120,13 +134,15 @@ function showEmptyState() {
     empty.appendChild(createBtn);
     content.appendChild(empty);
 
-    // Hide export/print/share buttons when no character is active
+    // Hide character action buttons when no character is active
     var exportBtn = document.getElementById("export-btn");
     var printBtn = document.getElementById("print-btn");
     var shareBtn = document.getElementById("share-btn");
+    var deleteBtn = document.getElementById("delete-btn");
     if (exportBtn) exportBtn.style.display = "none";
     if (printBtn) printBtn.style.display = "none";
     if (shareBtn) shareBtn.style.display = "none";
+    if (deleteBtn) deleteBtn.style.display = "none";
 }
 
 function newCharacterTab() {
@@ -235,15 +251,18 @@ TabManager.onActivate = function (id) {
     var exportBtn = document.getElementById("export-btn");
     var printBtn = document.getElementById("print-btn");
     var shareBtn = document.getElementById("share-btn");
+    var deleteBtn = document.getElementById("delete-btn");
     if (char && !splitMode) {
         CharacterUI.renderCharacterSheet(char);
         if (exportBtn) exportBtn.style.display = "";
         if (printBtn) printBtn.style.display = "";
         if (shareBtn) shareBtn.style.display = "";
+        if (deleteBtn) deleteBtn.style.display = "";
     } else if (!char) {
         if (exportBtn) exportBtn.style.display = "none";
         if (printBtn) printBtn.style.display = "none";
         if (shareBtn) shareBtn.style.display = "none";
+        if (deleteBtn) deleteBtn.style.display = "none";
     }
 };
 
