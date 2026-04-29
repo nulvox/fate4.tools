@@ -14,8 +14,7 @@ async function initWasm() {
     go.run(result.instance);
 
     document.getElementById("loading").style.display = "none";
-    document.getElementById("loading-footer").style.display = "none";
-    document.getElementById("app").style.display = "block";
+    document.getElementById("app").style.display = "";
 
     // Wire up the new-tab button
     document.getElementById("new-tab-btn").addEventListener("click", function () {
