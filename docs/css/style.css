@@ -75,10 +75,46 @@ body {
 
 /* Loading screen */
 #loading {
-    padding: 2rem;
+    padding: 4rem 2rem;
     text-align: center;
-    font-size: 1.2rem;
     color: var(--text-muted);
+}
+
+#loading h1 {
+    font-size: 1.8rem;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+}
+
+#loading p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Site footer */
+#site-footer,
+#loading-footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--section-border);
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#site-footer a,
+#loading-footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+#site-footer a:hover,
+#loading-footer a:hover {
+    color: var(--text);
+    text-decoration: underline;
 }
 
 /* App layout */
